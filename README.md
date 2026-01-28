@@ -53,8 +53,8 @@ Once the command has run, copy the output and replace ENCODED_CONNECTION_SECRET.
 
 Currently, at least a Claude Pro subscription is required to be able to connect to remote MCP servers.
 
-1. Go to Settings -> Integrations
-2. Click on "Add Integration"
+1. Go to Settings -> Connectors
+2. Click on "Add custom connector"
 3. Call it `alby`
 4. What is the endpoint URI: `https://mcp.getalby.com/mcp?nwc=ENCODED_NWC_URL` (see above for instructions)
 
