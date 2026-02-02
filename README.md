@@ -1,5 +1,7 @@
 # Alby Bitcoin Payments MCP Server
 
+**NEW:** also checkout [Alby CLI](https://github.com/getAlby/cli) for agents that don't support MCP.
+
 Connect a bitcoin lightning wallet to your LLM using Nostr Wallet Connect ([NWC](https://nwc.dev)).
 
 This MCP server uses the [official MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)
