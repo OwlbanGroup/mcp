@@ -11,6 +11,11 @@ import { registerFetchL402Tool } from "./tools/lightning/fetch_l402.js";
 import { registerFiatToSatsTool } from "./tools/lightning/fiat_to_sats.js";
 import { registerParseInvoiceTool } from "./tools/lightning/parse_invoice.js";
 import { registerRequestInvoiceFromLightningAddressTool } from "./tools/lightning/request_invoice.js";
+import {
+  initializeBlackboxClient,
+  registerQueryCodeTool,
+  registerAskBlackboxTool,
+} from "./tools/blackbox/index.js";
 
 export function createMCPServer(client: nwc.NWCClient): McpServer {
   const server = new McpServer({
@@ -38,6 +43,18 @@ export function createMCPServer(client: nwc.NWCClient): McpServer {
   registerFiatToSatsTool(server);
   registerParseInvoiceTool(server);
   registerRequestInvoiceFromLightningAddressTool(server);
+
+  // Blackbox AI tools
+  try {
+    const blackboxClient = initializeBlackboxClient();
+    registerQueryCodeTool(server, blackboxClient);
+    registerAskBlackboxTool(server, blackboxClient);
+  } catch (error) {
+    console.warn(
+      "Blackbox AI integration skipped:",
+      error instanceof Error ? error.message : String(error)
+    );
+  }
 
   return server;
 }

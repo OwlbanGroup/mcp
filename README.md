@@ -10,13 +10,11 @@ This MCP server has knowledge of [NWC](https://nwc.dev/), [LNURL](https://github
 
 Take a look at **[Awesome AI Bitcoin](https://github.com/getAlby/awesome-ai-bitcoin)** for places where you can use the Alby MCP.
 
-<a href="https://glama.ai/mcp/servers/@getAlby/mcp">
-  <img width="380" height="200" src="https://glama.ai/mcp/servers/@getAlby/mcp/badge" />
-</a>
+See the Glama AI badge at [https://glama.ai/mcp/servers/@getAlby/mcp](https://glama.ai/mcp/servers/@getAlby/mcp)
 
 ## Quick Start
 
-> In case you get stuck, see troubleshooting section below.
+In case you get stuck, see troubleshooting section below.
 
 ### Use the Alby-Hosted MCP Server
 
@@ -33,7 +31,7 @@ Both require providing an NWC connection secret as authentication, either as `Be
 
 Example: `Authorization: Bearer nostr+walletconnect://...`
 
-> If your agent UI supports bearer auth, just paste the connection secret into the bearer auth field.
+If your agent UI supports bearer auth, just paste the connection secret into the bearer auth field.
 
 ##### Query Parameter
 
@@ -41,9 +39,9 @@ If your agent doesn't support bearer auth, you can pass the NWC connection secre
 
 Example: `https://mcp.getalby.com/sse?nwc=ENCODED_CONNECTION_SECRET` or `https://mcp.getalby.com/mcp?nwc=ENCODED_CONNECTION_SECRET`
 
-_To get ENCODED_CONNECTION_SECRET, open browser devtools (right click -> inspect) and enter this in the console, with your own NWC connection secret set:_
+To get ENCODED_CONNECTION_SECRET, open browser devtools (right click -> inspect) and enter this in the console, with your own NWC connection secret set:
 
-```js
+```javascript
 encodeURIComponent("nostr+walletconnect://...");
 ```
 
@@ -62,7 +60,7 @@ Currently, at least a Claude Pro subscription is required to be able to connect 
 3. Call it `alby`
 4. What is the endpoint URI: `https://mcp.getalby.com/mcp?nwc=ENCODED_NWC_URL` (see above for instructions)
 
-#### Client-side
+##### Claude Desktop Configuration
 
 Add this to your claude_desktop_config.json:
 
@@ -93,7 +91,7 @@ Add this to your claude_desktop_config.json:
 
 ### Add to Goose CLI
 
-#### Use the Alby MCP server
+#### Use the Remote Alby MCP server
 
 1. Type `goose configure`
 2. Add extension -> Remote Extension (HTTP Streamable)
@@ -106,7 +104,7 @@ Add this to your claude_desktop_config.json:
 9. header name: `Authorization`
 10. header value: `Bearer nostr+walletconnect://...` (replace with your connection secret)
 
-#### Client-side
+#### Goose CLI with Command Line Extension
 
 1. Type `goose configure`
 2. Add extension -> Command Line Extension
@@ -120,7 +118,7 @@ Add this to your claude_desktop_config.json:
 
 ### Add to Cline
 
-> Copy the below and paste it into a cline prompt. It should prompt you to update the connection string.
+Copy the below and paste it into a cline prompt. It should prompt you to update the connection string.
 
 ```json
 Add the following to my MCP servers list:
@@ -166,15 +164,13 @@ Create a blank workflow and add an AI agent node. Configure your LLM model and a
 
 Configure the MCP Client by adding a credential with Command Line (STDIO) selected.
 
-command: `npx`
-arguments: `-y @getalby/mcp`
-environments `NWC_CONNECTION_STRING=nostr+walletconnect://your_key_here` (create the whole line in a text editor and paste it in, since the password field cannot be switched to plaintext)
+- command: `npx`
+- arguments: `-y @getalby/mcp`
+- environments: `NWC_CONNECTION_STRING=nostr+walletconnect://your_key_here` (create the whole line in a text editor and paste it in, since the password field cannot be switched to plaintext)
 
 See the [N8N paid chat workflow](examples/n8n-paid-chat-stdio) for a full example
 
-### Add to Windsurf
-
-#### Use the remote Alby MCP server
+#### Use the Remote Alby MCP server
 
 1. Download and open your Windsurf Editor
 2. Click on "Windsurf - Settings" in the toolbar at the bottom -> "Advanced Settings" -> "Cascade" -> Plugins (MCP Servers): Click on "Manage plugins" -> "View raw config" -> you'll see your "mcp_config.json"
@@ -190,7 +186,7 @@ See the [N8N paid chat workflow](examples/n8n-paid-chat-stdio) for a full exampl
 }
 ```
 
-4. Replace "ENCODED_NWC_URL" as descripted above. Click "Save" and restart the Windsurf editor.
+Replace "ENCODED_NWC_URL" as described above. Click "Save" and restart the Windsurf editor.
 
 ## Modes
 
@@ -230,11 +226,41 @@ Copy `.env.example` to `.env` and update your connection string
 
 ### Inspect the tools (use/test without an LLM)
 
-`yarn inspect`
+```bash
+yarn inspect
+```
 
 ### Supported Tools
 
 See the [tools directory](./src/tools)
+
+## Blackbox AI Integration
+
+This MCP server now includes integrated **Blackbox AI** support for advanced code search and generation capabilities!
+
+### Quick Setup
+
+1. Get your Blackbox API key from [blackbox.ai](https://blackbox.ai)
+2. Add to `.env`: `BLACKBOX_API_KEY=your_key_here`
+3. Run the server as usual
+
+### Available Blackbox Tools
+
+- **`blackbox_query_code`** - Search across millions of code snippets in public repositories
+- **`blackbox_ask`** - Ask questions and get code generation assistance
+
+### Features
+
+- ✨ **Code Search** - Find implementations and patterns across repositories
+- ✨ **Code Generation** - AI-powered code generation from natural language
+- ✨ **Multi-Language Support** - Works with TypeScript, Python, JavaScript, Java, Go, Rust, C#, PHP, Ruby, C/C++
+- ✨ **Context-Aware** - Can provide additional context for better responses
+- ✨ **Model Selection** - Choose between GPT-4, Claude, and other models
+
+For detailed setup and usage, see [BLACKBOX_INTEGRATION.md](./BLACKBOX_INTEGRATION.md)
+
+Windows users can run: `setup-blackbox.bat`
+Unix/Linux/Mac users can run: `setup-blackbox.sh`
 
 ## Troubleshooting
 
